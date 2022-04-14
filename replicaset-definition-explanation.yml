@@ -1,0 +1,30 @@
+apiVersion: apps/v1 #string, the version of the api that creates the object
+kind: ReplicaSet #String, the kind of object to be created, like: Pod, Service, etc
+metadata: #Dictionary, Data about the object
+  name: myapp-replicaset #String, 
+  labels: #Dictionary, any key-value pairs as you see fit
+    app: myapp
+    type: front-end
+spec:
+  template: #we define a pod template here. We copy everything in here except apiVersion and kind
+    metadata: #Dictionary, Data about the object
+      name: myapp-pod #String, 
+      labels: #Dictionary, any key-value pairs as you see fit
+        app: myapp
+    spec:
+      containers: #List/Array, since a pod can have multiple containers
+      - name: nginx-container
+        image: nginx
+  replicas: 3 #integer, amount of replicas
+  selector: #specifies what pods fall under it. 
+    matchLabels:
+      type: front-end
+
+#The replicaset controller checks if there are three pods with this selector. If not, pods are created based on the template. Even if there are sufficient pods already in the cluster. We must have the pod template specified in case a pod goes down in the future.
+# We can scale by changing the replicas.
+
+#To run this yaml file:
+# kubectl create -f pod-definition-explanation.yml
+
+# to update this yaml file:
+# kubectl replace -f replicaset-definition-explanation.yml

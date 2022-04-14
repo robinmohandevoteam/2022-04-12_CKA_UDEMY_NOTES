@@ -1,0 +1,22 @@
+apiVersion: v1 #string, the version of the api that creates the object
+kind: ReplicationController #String, the kind of object to be created, like: Pod, Service, etc
+metadata: #Dictionary, Data about the object
+  name: myapp-rc #String, 
+  labels: #Dictionary, any key-value pairs as you see fit
+    app: myapp
+    type: front-end
+spec:
+  template: #we define a pod template here. We copy everything in here except apiVersion and kind
+    metadata: #Dictionary, Data about the object
+      name: myapp-pod #String, 
+      labels: #Dictionary, any key-value pairs as you see fit
+        app: myapp
+    spec:
+      containers: #List/Array, since a pod can have multiple containers
+      - name: nginx-container
+        image: nginx
+  replicas: 3 #integer, amount of replicas 
+
+
+#To run this yaml file:
+# kubectl create -f pod-definition.explanation.yml

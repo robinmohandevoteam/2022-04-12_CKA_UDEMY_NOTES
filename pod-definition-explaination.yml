@@ -1,0 +1,14 @@
+apiVersion: v1 #string, the version of the api that creates the object
+kind: Pod #String, the kind of object to be created, like: Pod, Service, etc
+metadata: #Dictionary, Data about the object
+  name: myapp-pod #String, 
+  labels: #Dictionary, any key-value pairs as you see fit
+    app: myapp
+spec:
+  containers: #List/Array, since a pod can have multiple containers
+  - name: nginx-container
+    image: nginx
+
+
+#To run this yaml file:
+# kubectl create -f pod-definition.yml

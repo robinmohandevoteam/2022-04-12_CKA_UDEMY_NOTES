@@ -1,0 +1,8 @@
+Create pods with yaml:
+    kubectl create -f pod-definition.yml
+
+get a list of pods in the cluster:
+    kubectl get pods
+
+get pod info:
+    kubectl describe pod <podname>
