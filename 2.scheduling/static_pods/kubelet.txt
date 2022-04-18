@@ -1,0 +1,24 @@
+A node can live on its own in the sea: it's not part of a cluster and there is no master node.
+These pods are called Static Pods and are managed by their own captain: kubelet.
+You can specify manifest files to run pods. (no other k8s resources or objects)
+If you remove these files, the pod will be deleted automatically.
+The kubelet will try to restart the pod when the pod is down.
+
+The path of thhe manifests folder is specified as followed in kubelet.service:
+--pod-mainifest-path=/etc/Kubernetes/manifests
+
+You could also make use of a kubeconfig file:
+
+kubeconfig.yaml:
+staticPodPath: /etc/kubernetes/manifests
+
+kubelet.service:
+--config=kubeconfig.yaml
+
+If we want to see the process of this static pod. We cannot use kubectl. We should use docker ps.
+The  kube-apiservice is not there since this is part of the master node.
+
+But the master node is aware of static pods and can list them. You can only view this pod, but cannot edit or delete it.
+
+Why would we want to use static pods?
+For creating master nodes and to install the masterplane components ourselves.

@@ -1,0 +1,9 @@
+to add a taint to a node:
+
+kubectl taint nodes <node-name> <key>=<value>:<taint-effect>
+kubectl taint nodes node01 spray=mortein:NoSchedule
+
+to untaint a node use the same command but add a - at the end of the command:
+kubectl taint nodes node01 spray=mortein:NoSchedule-
+
+Keep in mind that the controlplane/master node has a taint by default that works a bit differently.

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80 #not mandatory, if you don't specify: same as port (80 here)
+      port: 80 #Only mandatory field
+      nodePort: 30008 #not mandatory, if not specified: a free port is used between 30000 - 32767
+  selector: #used to specify the pod you want to connect the NodePort service to
+    app: myapp #service targets all the pods with this selector
+    type: front-end
+
+

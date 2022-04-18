@@ -1,0 +1,29 @@
+Resource Requests: The computing resources the pod asks from a node/ requirements from the pod to be placed on a node:
+- CPU
+- Memory
+- Disk
+
+When there is no node available with sufficient resources, the pod will end up in a pending state.
+
+1 CPU =
+- 1 AWS vCPU
+- 1 GCP Core
+- 1 Azure Core
+- 1 Hyperthread
+
+CPU can be as low as 0.1 CPU ( = 100m)
+
+Memory:
+
+1 G (Gigabyte) = 1,000,000,000 bytes
+1 M (Megabyte) = 1,000,000 bytes
+1 K (Kilobyte) = 1,000 bytes
+
+1 Gi (Gibibyte) = 1,073,741,824 bytes
+1 Mi (Mebibyte) = 1,048,576 bytes
+1 Ki (Kibibyte) = 1,024 bytes
+
+Limits (how much can the pod use from the node):
+
+defaults for limits can be set in a LimitRange Resource
+This LimitRange is bound to a NameSpace.

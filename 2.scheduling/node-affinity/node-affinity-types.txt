@@ -1,0 +1,16 @@
+Available:
+
+requiredDuringSchedulingIgnoredDuringExecution
+preferredDuringSchedulingIgnoredDuringExecution
+
+Planned (available in future k8s versions):
+
+requiredDuringSchedulingRequiredDuringExectution
+
+---
+
+required: place pod on a node matching the terms
+preferred: place pod an a node matching the terms, but if you can't find one, place it on a node that doesn't match the requirements.
+
+IgnoredDuringExection: The running pods will not stop in case the node doesn't meet te requirements due to changes.
+With the future feature in k8s it is possible to affect running pods.

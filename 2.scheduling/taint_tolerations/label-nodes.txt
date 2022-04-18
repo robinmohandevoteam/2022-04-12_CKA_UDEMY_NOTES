@@ -1,0 +1,8 @@
+kubectl label nodes <node-name> <label-key>=<label-value>
+kubectl label nodes node01 size=large
+
+Limitations of NodeSelector:
+- Large OR Medium?
+- NOT Small
+
+-> Use Node Affinity for this

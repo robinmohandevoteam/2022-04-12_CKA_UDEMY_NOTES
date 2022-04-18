@@ -1,0 +1,7 @@
+In every pod definition file, there is a field caled NodeName. By default this field is not set. k8s add this automattically.
+k8s looks through all the nodes and looks for a node that has no name been set. Those are the candidates for scheduling.
+
+What happens if there is no scheduler?
+The pods continue to be in a pending state.
+-> We can manually set a node to the pod by defining the NodeName in the Pod Definition File.
+k8s does not allow you to modify the node of a running pod. In this case we use a pod binding object and send this to the api
