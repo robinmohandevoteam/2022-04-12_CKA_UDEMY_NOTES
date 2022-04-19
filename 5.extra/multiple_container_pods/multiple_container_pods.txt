@@ -1,0 +1,6 @@
+Containers in multi-container pods share the same:
+- lifcycle
+- network
+- storage
+
+Just add multiple containers to the pod configuration file in order to make a multi-container pod
