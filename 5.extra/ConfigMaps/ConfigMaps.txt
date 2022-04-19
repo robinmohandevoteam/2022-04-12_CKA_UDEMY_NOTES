@@ -1,0 +1,28 @@
+When you have a many environment Variables. The pod definitionfile will be spoiled with key-value pairs in the env section.
+It is better to use ConfigMaps.
+
+There are two phases involed in working with configmaps:
+1. Create a ConfigMap
+2. Inject into Pod
+
+imperative ConfigMap creation:
+kubectl create configmap
+
+declarative ConfigMap creation:
+kubectl create -f my-configmap
+
+kubectl create configmap app-config --from-literal=APP_COLOR=blue
+
+If you want to add two value-pairs:
+kubectl create configmap app-config --from-literal=APP_COLOR=blue --from-literal=APP_MOD=prod
+
+A better way to add multiple key-value pairs for a ConfigMap is pointing to a file:
+
+kubectl create configmap <config-name> --from-file=<path-to-file>
+kubectl create configmap ap-config --from-file=app_config.properties
+
+Name the ConfigMaps according to the apps that they are used for.
+
+ViewConfigMaps:
+kubectl get configmaps
+kubectl describe configmaps

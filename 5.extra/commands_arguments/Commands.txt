@@ -1,0 +1,35 @@
+Docker:
+
+$ docker run ubuntu
+
+We see that the container starts and exits right away
+
+$ docker ps
+
+Once a task in a container is complete, the container stops. It will stay running as long as the processes/programs inside the container are alive.
+
+In docker there is a default command.
+For a nginx image it is: nginx
+For mysql: mysqld
+for a plain ubuntu image: bash
+
+We can override the default command:
+
+$ docker run ubuntu [command]
+$ docker run ubuntu sleep 5
+
+Entrypoint: specify the program when the container starts, without a argument. Argument must be specified when starting the container.
+
+When you have an entrypoint and CMD specified:
+
+FROM ubuntu
+ENTRYPOINT ["sleep"]
+CMD ["5"]
+
+docker run ubuntu-sleeper 10
+The 5 will be overwritten by the 10
+
+---
+
+The k8s command overwrites the docker ENTRYPOINT
+the k8s args overwrites the docker CMD
