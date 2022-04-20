@@ -1,0 +1,84 @@
+The components of k8s controlplane can be of different versions.
+
+kube-apiserver is the primary component in the controlplane
+All of the other components talk to the kube-apiserver
+None of the other components may be of a higher version than the kube-apiserver
+
+These components may be of 1 minor versions lower:
+- controller manager
+- kube-scheduler
+
+These components may be of 2 minor versions lower:
+- kubelet
+- kube-proxy
+
+This component is allowed to be 1 minor version higher or 1 lower than the kube-apiserver:
+- kubectl
+
+Kubernetes only supports the last 3 versions.
+
+The recommendation is to upgrade 1 minor upgrade at a time.
+
+In case of a managed k8s cluster, you can easily upgrade in the GUI of the cloud provider.
+In case of a cluster set up with kubeadm, use:
+- kubeadm upgrade plan
+- kubeadm upgrade apply
+
+Or from scratch when you have build your cluster from scratch.
+
+Upgrading happens in two steps:
+1. upgrade the master node(s)
+2. upgrade the worker nodes
+
+When the master node is upgrades, it goes down. The worker nodes remain available.
+All management functions are down. kubectl, for instance, is not available.
+
+different ways to upgrade the worker nodes:
+strategy 1:
+    upgrade them all at once:
+        - pods are all down
+        - users can't access the applications
+        - Once the upgrade is done, nodes are up and pods are scheduled on the them
+strategy 2:
+    upgrade 1 node at the time:
+        - When the node is upgraded, the pods are moved to other nodes
+strategy 3:
+    add new nodes with higher version to the cluster
+        - Pods are moved from old node to node with newer version.
+        - Old node is deleted afterwards
+
+$ kubeadm upgrade plan
+- shows current and available versions
+
+The kubelet component must be manually updated. Kubeadm does not upgrade or install kubelets.
+kubeadm itself must be upgraded before you upgrade the cluster.
+Kubeadm follows the same version as k8s.
+
+To upgrade from v1.11.0 to v1.11.0:
+1. upgrade the kubeadm tool itself:
+    $ apt-get update
+    $ apt-get upgrade -y kubeadm=1.12.0-00
+    $ apt install kubeadm=1.20.0-00
+2. upgrade the cluster
+    $ kubeadm upgrade apply v1.12.0
+
+If you check the nodes, you'll see still the older version. This is because the version of the kubelets are shown.
+
+3. upgrade the kubelets
+    $ apt update
+    $ apt-get upgrade -y kubelet=1.12.0-00
+    $ systemctl restart kubelet
+
+Now only the master node kubelet has been updated.
+
+4. Upgrade the worker nodes (stategy 2)
+    $ kubectl drain node-1
+    $ apt-get upgrade -y kubeadm=1.12.0-00 (ssh ?)
+    $ apt-get upgrade -y kubelet=1.12.0-00
+    $ kubeadm upgrade node config --kubelet-version v1.12.0
+    $ systemctl restart kubelet
+    $ kubectl uncordon node-1 (because the node was drained)
+    *repeat these steps on the other nodes*
+
+Keep in mind that kubectl is managed by the master node
+

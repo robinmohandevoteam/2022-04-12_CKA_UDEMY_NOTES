@@ -1,0 +1,27 @@
+operating system upgrade:
+
+When the node is down for more than 5 minutes, the pods on the node are terminated.
+In case of the pods being part of a ReplicaSet, they're rescheduled on other nodes.
+
+This time, is known as pod-eviction-timeout
+
+$ kube-controller-manager --pod-eviction-timemout=5m0s
+So it will take 5 minutes of the node being down before k8s considers the node being dead.
+In case that the pod comes back online after the pod-eviction-timeout, the pod will be blank (no nodes)
+
+Drain a node: move pods to other nodes in the cluster. The node has become unscheduleable and brings the node down.
+$ kubectl drain node-1
+
+Often draining nodes gives an error because there are nodes from a daemonset present. Add the following
+--ignore-daemonsets
+$ kubectl drain node-1 --ignore-daemonsets
+
+To make the node available for scheduling, uncordon the node.
+$ kubectl uncordon node-1
+
+corden a node: make the node unscheduleable.
+$ kubectl cordon node-1
+
+Difference between cordon and drain:
+drain terminates the node and moves the pods to other nodes.
+cordon makes the node unscheduleable (does not terminate the node and pods are not moved). New pods are not scheduled on that node.

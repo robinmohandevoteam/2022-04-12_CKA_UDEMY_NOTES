@@ -1,0 +1,29 @@
+v1.11.3
+
+1 = major
+11 = minor
+3 = patch
+
+minor functions are released every few months containing:
+- features
+- functionalities
+
+patches are released more often:
+- critical bug fixes
+
+release order of a version updaste
+1. alpha
+2. beta
+3. main stable release
+
+K8s has all the controlplane components in it. All of them of the same version:
+- kube-apiserver
+- controller-manager
+- kube-scheduler
+- kubelet
+- kube-proxy
+- kubectl
+
+There can be other components that might not have the same version numbers:
+- ETCD cluster
+- CoreDNS

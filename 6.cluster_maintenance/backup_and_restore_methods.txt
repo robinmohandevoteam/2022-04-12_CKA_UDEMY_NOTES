@@ -1,0 +1,50 @@
+We use service definition files to create resources.
+the ETCD cluster stores all cluster related information.
+
+With the declarative approach, we have everything defined in definition files.
+We could back this up using Github.\
+
+But not everyone does it decralatively, some create resources imperatively.
+In this respect, it might be better to query the kube-apiserver.
+
+kubectl get all --all-namespaces -o yaml >  all-deploy-services.yaml
+
+We can use tools like Velero to backup
+
+---
+
+ETCD Cluster
+stores information about the state of our cluster
+- cluster
+- nodes
+- resources
+
+So instead of backing up the resource files, we could backup the ETCD Cluster itself.
+
+We can specify where the ETCD files are stored in etcd.service --data-dir=/var/lib/etcd
+We can make a snapshot of the ETCD database:
+ $ ETCDCTL_API=3 etcdctl snapshot save snapshot.db \
+    --endpoints=https://127.0.0.1:2379 \
+    --cacert=/etc/etcd/ca.crt \
+    --cert=/etc/etcd/etcd-server.crt \
+    --key=/etc/etcd-server.key
+
+ We can see the status of the snapshot with:
+ ETCDCTL_API=3 etcdctl snapshot status snapshot.db
+
+ To restore the cluster from a snapshot:
+
+ 1. Stop the kube-apiserver:
+    $ service kube-apiserver Stop
+ 2. backup from the snapshot
+    $ ETCDCTL_API=3 etcdctl snapshot restore snapshot.db --data-dir /var/lib/etcd-from-backup
+    When backing up this way, ETCD adds new members to a new cluster. This to prevent new member
+ 3. We must set the new data directory in etcd.service:
+    --data-dir=/var/lib/etcd-from-backup
+ 4. reload the server daemon and etcd service
+    $ systemctl daemon-reload
+    $ service etcd restart
+ 5. start kube-apiserver
+    $ service kube-apiserver start
+
+
