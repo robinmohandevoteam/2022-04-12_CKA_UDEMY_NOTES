@@ -1,0 +1,3 @@
+The initContainer is run when the POD is first created.
+The initContainers process must run to a completion before the other containers start.
+If the initContainer fails to complete, the Pod will be restarted repeatedly untill the initContainer succeeds.
