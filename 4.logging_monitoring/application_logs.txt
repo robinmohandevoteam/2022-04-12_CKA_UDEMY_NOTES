@@ -1,0 +1,14 @@
+in docker:
+
+docker run -d kodekloud/event-simulator
+docker logs -f ecf
+
+We get a live log file.
+
+kubectl create -f event-simulator.yaml
+kubectl logs -f event-simulator-pod
+
+What if there are more containers running in the pod?
+You must specify the container name:
+
+kubectl logs -f event-sumulator-pod event-simulator

@@ -1,0 +1,19 @@
+We can add a scheduler with our own conditions
+Our k8s cluster can have multiple schedulers at the same time.
+
+When creating a pod, we can specify which scheduler needs to be used to schedule the pod.
+
+We have seen how to download the scheduler as a binary.
+When we do this and we have not defined a name, the defuault name will be:
+--scheduler-name=default-scheduler
+
+When you make your own scheduler:
+--scheduler-name=my-custom-scheduler
+
+We can copy the default scheduler(Pod) and add the --scheduler-name to the -command block
+
+In the pod definition file, we add a new key/value under spec:
+
+schedulerName: my-custom-scheduler
+
+kubectl get events

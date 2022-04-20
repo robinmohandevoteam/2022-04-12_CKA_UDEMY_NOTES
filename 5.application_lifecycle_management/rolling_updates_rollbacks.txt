@@ -1,0 +1,24 @@
+rollout command:
+
+kubectl rollout status deployment/myapp-deployment
+
+Deployment Strategies:
+
+recreate: all pods are deleted and then recreated: in the mean time the application is down.
+
+Rolling Update: Pods are deleted and recreated one by one: application does not go down.
+
+Rolling Update = default deployment strategy.
+
+Two ways to do the deployment:
+- kubectl apply -f deployment-definition.yml (with the image changed in the YAML to a newer version)
+- kubectl set image deployument/myapp-deployment nginx=nginx:1.9.1
+
+In a upgrade, k8s creates a new replicaset in the Deployment: The old and the new one.
+
+To reverse the rollout/make a rollback:
+
+kubectl rollout undo deployment/myapp-deployment
+
+We can see this all happening when we do:
+kubectl get replicasets

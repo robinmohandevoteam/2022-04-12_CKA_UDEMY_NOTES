@@ -1,0 +1,23 @@
+We want to know things on different levels:
+- node
+- pod
+
+heapster was one of the first monitoring service -> Now became Metrics Server
+You can have 1 Metrics Server per k8s cluster.
+- In-memory
+
+How are metrics generated:
+Kubelet contains cAdvisor:
+Exposes metrics to the Kubelet API
+
+To enable Metrics Server on minikube:
+minikube addons enable metrics-server
+
+for other k8s servers:
+git clone https://github.com/kubernetes-incubator/metrics-server.git
+kubectl create -f deploy/1.8+/
+
+View:
+
+kubectl top node
+kubectl top pod
