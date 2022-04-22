@@ -1,0 +1,39 @@
+There are different users accessing the cluster:
+- Admins
+- Developers
+- Bots
+- Application End users
+
+Admins and Developers are users.
+Bots make use of Service Accounts
+
+Users cannot be create in a cluster by using kubectl
+But serviceaccounts can be created in a cluster:
+    $ kubectl create serviceaccount sa1
+    $ kubectl get serviceaccount
+
+All user access is managed by the kube-apiserver
+The kube-apiserver:
+1. Authenticate the user
+2. Processes the request
+
+How does the kube-apiserver authenticate?
+    - Static Password File
+    - Static Token File
+    - Certificates
+    - Identity Services
+
+Static Password File:
+Uses a csv file:
+password,username,userid
+
+user-details.csv
+password123,user1, u0001
+password123,user2, u0002
+password123,user3, u0003
+
+You can pass this file as an option to the kube-apiserver:
+
+kube-apiserver.service
+--basic-auth-file=user-details.csv
+restart the kube-apiserver

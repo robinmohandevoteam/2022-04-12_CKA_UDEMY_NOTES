@@ -1,0 +1,21 @@
+kube-apiserver is at the center of everything in cluster.
+This is the first line of defence
+
+We have to decicde two things:
+- Who can access the cluster?
+    - Files - Username and Passwords
+    - Files - Username and Tokens
+    - Certificates
+    - External Authentication providers = LDAP
+    - Service Accounts (for machines)
+- What can they do in the cluster?
+    - RBAC Authorization
+    - ABAC Authorization
+    - Node Authorization
+    - Webhook Mode
+
+All the communication between the master node components (ETCD Cluster, Kubelet, Kube Controller Manager, Kuve scheduler, Kube Proxy) is secured using TLS encryption.
+
+Communication between applications within the cluster:
+By default, all the pods can acces other pods in the cluster.
+We can resrtict this using Network Policies.

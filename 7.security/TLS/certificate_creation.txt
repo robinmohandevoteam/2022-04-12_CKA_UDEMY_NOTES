@@ -1,0 +1,63 @@
+Certificate Authority (CA)
+
+1. Generate keys
+    $ openssl genrsa -out ca.key 2048
+        ca.key
+
+2. Certificate Signing request
+    $ openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr
+        ca.csr
+
+3. Sign Certificates
+    $ openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
+        ca.crt
+
+Client Certificates: Admin Username
+
+1. Generate keys:
+    $ openssl genrsa -out admin.key 2048
+        admin.key
+
+2. Certificate Signing Request:
+    $ openssl req -new -key admin.key -subj "CN=kube-admin/O=system:masters" -out admin.csr
+        admin.csr
+
+    O=system:masters is the group where the client to belongs. This mandatory on the certificate.
+
+3. Sign Certificates:
+    $ openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt
+        admin.crt
+
+So the admin.crt was signed with the CA certificate and the CA key. Signing the certificate with a CA keypair makes this certificate valid.
+
+Server Certificates: Kube API Server
+
+1. generate keys
+    $ openssl genrsa -out apiserver.key 2048
+        apiserver.key
+
+2. create an openssl.cnf file  
+    check openssl.cnf
+    Can copy this from k8s documentation
+
+3. Certificate signing request:
+    $ openssl req -new -key.apiserver.key -subj "/CN=kube-apiserver" -out apiserver.csr
+        apiserver.csr
+
+4. add things to the kube-apiserver config file:
+    --client-ca-file=ca.pem
+    --tls-cert-file=apiserver.crt
+    --tls-private-key-file=apiserver.key
+
+    --etcd-cafile=ca.pem
+    --etcd-certfile=apiserver-etcd-client.crt
+    --etcd-keyfile=apiserver-etcd-client.key
+
+    --client-ca-file=ca.pem
+    --tls-cert-file=apiserver.crt
+    --tls-private-key-file=apiserver.key
+
+Server certificates: kubelet-server
+
+The kubelets are named after their nodes: e.g. system:node:node01, system:node:node01, system:node:node01
+Once created, use the certificates in the kubelet-config.yaml

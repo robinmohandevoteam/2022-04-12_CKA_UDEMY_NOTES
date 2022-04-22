@@ -1,0 +1,21 @@
+When you set up a k8s cluster the hard way, you have to set all the certificates yourself. find them at:
+    $ cat /etc/systemd/system/kube-apiserver.service
+
+When you use kubeadm, Find them at:
+    $ cat /etc/kubernetes/manifests/kube-apiserver.yaml
+Look for the path for the certificates you want to see, then use the following command to show:
+    $ openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout
+
+---
+
+Inspect Service Logs, k8s the hard way:
+    $ journalctl -u etcd.service -l
+
+Inspect Logs, kubeadm:
+    $ kubectl logs etcd-master
+
+Sometimes we have to go one level deeper to docker to get the logs:
+    1. check the running proccesses:
+        $ docker ps -a
+    2. check the logs:
+        $ docker logs 87fc
