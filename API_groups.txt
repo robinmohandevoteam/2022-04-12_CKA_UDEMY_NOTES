@@ -1,0 +1,71 @@
+APi Groups in k8s
+
+What is the k8s API?
+
+If we want to check the version of our cluster, we can access the API:
+    $ curl https://kube-master:6443/version (port 6443 is the default port)
+
+If we want to get the pods we can do:
+    $ curl https://kube-master:6443/api/v1/pods
+
+The k8s api consists of multiple subgroups:
+    - /version
+        show the version of the cluster
+    - /api
+    - /apis
+    - /logs
+        for intergrated third party logging applications
+    - /metrics
+        helps to monitor the cluster
+    - /healthz
+        help to monitor the cluster
+
+
+info about apis is divided in two subgroups:
+    - /api: core group
+        - all the core functionalies exist here: /v1
+            - namespaces
+            - pods
+            - rc
+            - configmaps
+            - services
+            - etc etc etc
+    - /apis named group
+        - are more organized
+        - newer features are and will be placed in this named group
+            - /apps
+                /v1
+                    deployments
+            - /extensions
+            - /networking.k8s.io
+                /v1
+                    /networkpolicies
+            - /storage.k8s.io
+            - /authentication.k8s.io
+            - /certificates.k8s.io
+
+Each resource has actions you can do with these resources, trese are known as verbs:
+    - list
+    - get
+    - create
+    - delete
+    - update
+    - watch
+
+We can show this in our apicluster:
+    $ curl http://localhost:6443 -k
+
+We can show the supported resources:
+    $ cutl http://localhost:6443/apid -k | grep 'name'
+
+If we were to acces the api with a curl, we are most likely denied access as we haven't specified any authentication mechanisms.
+We have to specify our certificates details:
+    $ curl http://localhost:6443 -k
+    --key admin.key
+    --cert admin.crt
+    --cacert ca.crt
+
+Alternatively, we can use a kubectl proxy client:
+    $kubectl proxy
+
+This launches a proxyserver on port 8001. This waym we don't have to specify our certification details.
