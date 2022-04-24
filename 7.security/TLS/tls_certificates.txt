@@ -1,0 +1,43 @@
+Certificate Authority (CA)
+
+The certificates are usually stored on the masternode itself. So the masternode is a CA.
+
+1. Create CertificateSigningRequest Object
+2. Review Requests
+3. Approve Requests
+4. Share Certs to Users
+
+1. User makes a key
+    $ openssl genrsa -out jane.key 2048
+        jane.key
+
+2. User sends the key to the admin, outputs a certificate request
+    $ openssl req -new -key jane.key -subj "/CN=jane" -out jane.csr
+        jane.csr
+
+3. The certificate request must be encrypted:
+    $ cat jane.csr | base64
+
+4. Add the encrypted code to a special certificate config file (YAML)
+    *Check the file in this folder*
+
+5. The admin can now see the request:
+    $ kubectl get csr
+
+6. Now the admin can approve the request:
+    $ kubectl certificate approve jane
+
+7.  To show a specific csr:
+    $ kubectl get csr jane -o yaml
+    The certificate is encoded, to decode it use echo <encrypted key> | base64 --decode
+
+
+All the certificate related operations are carried out by the Controller Manager
+The Controller Manager contains the following controllers:
+    - CSR-APPROVING
+    - CSR-SIGNING
+
+The Controller Manager must have the CA certificates specified in the yaml file:
+    /etc/kubernetes/manifests/kube-controller-manager.yaml
+        --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt
+        --cluster-signing-key-file=/etc/kubernetes/pki/ca.key
