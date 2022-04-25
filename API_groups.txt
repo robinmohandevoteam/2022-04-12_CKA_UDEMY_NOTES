@@ -68,4 +68,10 @@ We have to specify our certificates details:
 Alternatively, we can use a kubectl proxy client:
     $kubectl proxy
 
-This launches a proxyserver on port 8001. This waym we don't have to specify our certification details.
+This launches a proxyserver on port 8001. This way we don't have to specify our certification details.
+
+Two terms that kind of sound the same:
+- kube proxy
+    Used to enable connectivity between pods and services accross diffrent nodes in the cluster.
+- kubectl proxy
+    An HTTP created by kubectl utility to access the Kube API server.

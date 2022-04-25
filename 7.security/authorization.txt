@@ -1,0 +1,27 @@
+Authorization
+
+Why do we need authorization?
+Admins have several rights for operations.
+
+We don't want the developers and bots having the same rights as the admins.
+
+different authorization methods:
+- Node
+    The kubelet accesses and communicates with the Kube API
+    Everything with the name 'system:node:node01' uses the Node authorization method.
+- ABAC (Attribute Based Athorization Control)
+    Users are associated with a set of rules
+    Using a policy file created in JSON format.
+- RBAC
+    Instead od associate a set of permissions to a user, we provide a user with a role.
+- Webhook
+    When we want to outsource the authorization process (e.g. to Open Policy Agent)
+    Kube API server can make a call to the Agent with information about the user.
+
+There are two more modes in addition to this:
+    - Always allow: Allows everybody and everything (this is the default)
+    - Always deny: Denies everynody and everything
+
+Authorization mode:
+--authorization-mode=Node, RBAC, Webhook
+Authorization will go according to this sequence.
