@@ -1,0 +1,13 @@
+k8s doesn't have a ingress controller by default.
+You must deploy one yourself.
+We can use Nginx.
+
+Nginx is installed as a deployment on the clutster (see deployment)
+We must also make a ConfigMap for storing information:
+    - err-log-path
+    - keep-alive
+    - ssl-protocols
+
+We then need a nodeport service to expose the ingress.
+
+We then make a service account.

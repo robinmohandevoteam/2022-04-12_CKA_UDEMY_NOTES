@@ -1,0 +1,9 @@
+We have made volumes in the pod definition files. This could be a tedious task if we had to do this each time.
+We want to manage storage more centrally.
+
+Persisten Volumes(PV): cluster wide pool of storage volumes, configured by an admin
+Users can use storage of this pool with Persistent Volume Claims (PVC)
+
+persistentVolumeReclaimPolicy: Recycle
+persistentVolumeReclaimPolicy: Retain 
+persistentVolumeReclaimPolicy: Delete

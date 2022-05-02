@@ -75,3 +75,5 @@ Two terms that kind of sound the same:
     Used to enable connectivity between pods and services accross diffrent nodes in the cluster.
 - kubectl proxy
     An HTTP created by kubectl utility to access the Kube API server.
+
+    

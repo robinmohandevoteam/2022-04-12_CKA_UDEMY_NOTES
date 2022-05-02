@@ -1,0 +1,13 @@
+Network Policies
+
+There are two types of traffic:
+    - ingress: the right to enter a property (pod)
+    - engress: the right to exit a property (pod)
+This is the direction of the traffic
+
+By default traffic betweens pods is allowed.
+
+We implement a network policy to prevent two pods communicating with each other.
+
+A network policy is an object and is placed on a pod.
+We select the pods with labels and selectors.

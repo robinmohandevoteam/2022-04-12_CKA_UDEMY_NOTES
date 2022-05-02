@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: db-polixy
+spec:
+  PodSelector:
+    matchLabels:
+      role: db
+    policyTypes:
+    - Ingress
+    ingress:
+    - from: #See this list as OR, not AND.
+      - podSelector:
+          matchLabels:
+            name: api-pod
+      -  nameSpaceSelector:
+          matchLabels:
+            name: api-pod
+      - ipBlock:
+          cidr: 192.168.5.10/32 #The range that can enter the pod
+      
+      
+      ports:
+      - protocol: TCP
+        port: 3306

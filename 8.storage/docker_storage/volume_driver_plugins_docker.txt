@@ -1,0 +1,20 @@
+Storage Drivers help manage storage on images and containers.
+
+Volumes: If you want to persist data/storage, you have to make volumes.
+
+Volume Drivers Plugins:
+    - Local (default)
+    - Azure File Storage
+    - Convoy
+    - DigitalOcean Block Storage
+    - Flocker
+    - gce-docker
+    - GlusterFS
+    - NetApp
+    - RexRay
+    - Portworx
+    - VMware vSphere Storage
+
+When we run a docker container, we can specify a specific volume driver:
+    $ docker run -it --name mysql --volume-driver rexray/ebs --mount src=ebs-vol, target=/var/lib/mysql mysql
+    Volume will be stored in AWS Cloud for this instance.

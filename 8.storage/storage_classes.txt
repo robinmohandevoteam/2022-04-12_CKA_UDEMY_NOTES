@@ -1,0 +1,5 @@
+We have seen that when we want to use a persistent volume in the cloud, we must specify the exact disk in the pod definition file.
+This is called Static Provisioning
+
+Dynamic Provisioning:
+Automatically provisions storage in the cloud.

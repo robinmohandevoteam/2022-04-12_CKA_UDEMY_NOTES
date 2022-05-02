@@ -1,0 +1,62 @@
+It is important to understand how storage works with Docker.
+
+There are two concepts with storage in Docker:
+    - Storage Drivers
+    - Volume Drivers
+
+Storage Drivers in Docker:
+
+File System  where docker stores all its data by default:
+    /var/lib/docker
+        aufs
+        containers
+        image
+        volumes
+
+Docker follows a layered architecture.
+    1. Pull Ubuntu image
+    2. Changes in apt packages
+    3. Changed in pip packages
+    4. Copy source code
+Each step is built on top of the previous step/layer.
+So the size is only increased by the layer that was added.
+
+Understand the difference in making changes in:
+    Image Layers:
+       - Made in Dockerfile
+       - Read Only
+    Container Layers:
+       - Just changes in the container
+       - Read and Write
+
+So if you make changes in the container layer and you remove the container, the data is gone. What if you wish to persist this data?
+
+Volumes:
+
+Create a Docker volume:
+    $ docker volume cratee data_volume
+This creates a volume in:
+    /var/lib/docker
+        volumes
+            data_volume
+
+Then you can mount the volume to the container:
+    $ docker run -v data_volume:/var/lib/mysql mysql
+So this attaches the data to a existing image in a new container.
+
+Two types of mounting
+    - Volume mounting
+        Specific vrom the volumes directory
+    - Bind mounting
+        from directory on the Docker host
+
+-v has become --mount:
+    $ docker run --mount type=bind, source=/data/mysql, target=/var/lib/mysql
+
+The mounting is done by storage driver. The drivers vary per OS:
+    - AUFS
+    - ZFS
+    - BTRFS
+    - Device Mapper
+    - Overlay
+    - Overlay2

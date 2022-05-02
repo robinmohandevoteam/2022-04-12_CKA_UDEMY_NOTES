@@ -1,0 +1,4 @@
+We can apply security settings on the container and on the pod.
+The settings on the container will overwrite the pod settings.
+
+We add a special field 'SecurityContext' to the spec in the pod definition file

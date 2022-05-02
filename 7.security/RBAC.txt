@@ -1,1 +1,33 @@
 Role Based Access Control
+
+How do we create a role?
+We create a role definition object: developer-role.yaml
+Then we can bind the role to a user: devuser-developer-binding.yaml
+
+We can get the roles with:
+    $ kubectl get roles
+
+We can get rolebindings with:
+    $ kubectl get rolebindings
+
+To get details about a role:
+    $ kubectl describe role <rolename>
+
+To get details about a rolebinding:
+    $ kubectl describe rolebinding <rolebindingname>
+
+Check access:
+
+$ kubectl auth can-i crate deployments
+    yes
+
+$ kubectl auth can-i delete nodes
+    no
+
+As an admin, we can check other users permissions:
+
+$ kubectl auth can-i create deployments --as dev-user
+    yes
+
+$ kubectl auth can-i delete nodes --as dev-user
+    yes

@@ -1,0 +1,14 @@
+Roles ans rolebindings are created for a certain namespace.
+You can also have roles and rolebindings for a cluster
+
+To see namespaced resources:
+    $ kubectl api-resources --namespaced=true
+
+Top see cluster wide resources:
+    $kubectl api-resources --namespaced=false
+
+For cluster wide resources we use:
+    - clusterroles
+    - clusterrolesbindings
+
+We can also make namespaces for resources in a clusterrole. In this case, 

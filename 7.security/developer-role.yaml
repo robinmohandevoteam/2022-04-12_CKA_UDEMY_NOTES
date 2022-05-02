@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+rules:
+  - apiGroups: [""] #rule1
+    resources: ["pods"]
+    verbs: ["list", "get", "create", "update", "delete"]
+  - apiGroups: [""] #rule2
+    resources: ["configMap"]
+    verbs: ["create"]
+  - apiGroups: [""] #rule3
+    resources: ["configMap"]
+    verbs: ["create"]
+    resourceNames: ["blue", "orange"] #rule applies to specific resources
+

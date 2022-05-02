@@ -1,0 +1,30 @@
+In the past, k8s used only the docker container runtime
+
+
+Container Runtime Interface (CRI):
+    How does k8s communicate with container runtimes like:
+        - Docker
+        - rkt
+        - cri-o
+
+So a future new container runtime must follow the CRI standards.
+
+Container Network Interface (CNI):
+    How does k8s communicate with networking renders like:
+        - weaveworks
+        - flannel
+        - cilium
+
+Container Storage Interface (CSI):
+    How does k8s communicate with storage solutions as:
+        - Portworx
+        - Amazon EBS
+        - Dell EMC
+        - GlusterFS
+        - You can even write your own drivers
+
+CSI is not a k8s specific standard, it's meant to be a universal standard.
+    Current technologies supports CSI:
+        - k8s
+        - CloudFoundry
+        - Apache Mesos

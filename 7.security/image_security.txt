@@ -1,0 +1,13 @@
+Image Security
+
+the image in a pod definition file follows the dockers image naming convention
+
+If you have:
+    image: nginx
+it actually is (because no user or account name is specified):
+    image: library/nginx
+
+When a repository is not specified, it pulls from the Docker Hub:
+    image: docker.io/library/nginx
+
+We can add a private registry 

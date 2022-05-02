@@ -1,0 +1,21 @@
+Persistent Volume Claims (PVC)
+    used to make PV available to a node.
+
+PV and PVC are two different objects in k8s.
+
+k8s binds the PVC and to a PV accoring to the requirements.
+Every PVC is bound to a PV.
+k8s checks:
+    - Sufficient Capacity
+    - Access Mode
+    - Volume Modes
+    - Storage Class
+
+If there are multiple suitable PVs available, we can still specify a specifig PV with labels and selectors.
+
+A smaller claim may get bound to a larger volume in case all the criteria matches and there is no better option.
+
+PVC to PV is a 1 to 1 relationship:
+    One PVC per PV
+
+The PVC will remain in a pending state when no PV is available until one in available.
